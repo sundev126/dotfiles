@@ -1,0 +1,64 @@
+set nocompatible    "使用vim键位
+
+""""""""""""""""""""""""""""""""""""""""""""
+" 设置UTF8
+set encoding=utf-8
+set fileencodings=utf-8,gbk,cp936
+set fileencoding=utf-8
+""""""""""""""""""""""""""""""""""""""""""""
+
+syntax on   " 打开语法高亮
+filetype on " 文件类型检测
+filetype plugin on  " 文件类型插件自动检测加载
+filetype indent on  " 文件类型缩进自动检测
+set number  " 显示行号
+set relativenumber  " 显示相对行号
+
+""""""""""""""""""""""""""""""""""""""""""""
+" 配置tab行为
+set expandtab   " 将tab扩展为空格键
+set tabstop=4   " tab为4个空格
+set softtabstop=4   " 编辑模式时，缩进的长度
+set shiftwidth=4    " 设置自动缩进时使用的缩进长度
+set autoindent  " 自动缩进
+set smartindent " 智能缩进
+set cindent " 使用C类型的缩进
+""""""""""""""""""""""""""""""""""""""""""""
+
+set foldmethod=syntax   " 基于缩进或语法进行代码折叠
+"set nofoldenable    " 启动 vim 时关闭折叠代码
+
+
+" 外观界面
+" 深色背景
+" set background=dark
+set laststatus=2    " 显示状态栏
+" 设置状态栏显示的数据
+function! FileSize()
+    let bytes = getfsize(expand("%:p"))
+    if bytes <= 0
+        return ""
+    endif
+    if bytes < 1024
+        return bytes
+    elseif bytes < 1024*1024
+        return (bytes/1024) . "K"
+    else
+        return (bytes/1024/1024) . "M"
+    endif
+endfunction
+set statusline=%t\ %m%r\    "文件名 文件状态
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}] "文件编码
+set statusline+=\ %{FileSize()}
+set statusline+=%=[HEX:%B]
+set statusline+=\ %-21(%11(%l/%L%),%-3v\ %P%)
+
+set hlsearch    " 高亮显示搜索结果
+set incsearch   " 实时跳转到搜索到的位置
+set ignorecase  " 忽略大小写
+
+""""""""""""""""""""""""""""""""""""""""""""
+" vim 备份文件行为
+set noundofile      " 不创建 .un~ 撤销文件
+set nobackup        " 不创建备份文件
+""""""""""""""""""""""""""""""""""""""""""""
