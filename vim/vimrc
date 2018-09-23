@@ -1,5 +1,10 @@
 set nocompatible    "使用vim键位
 
+set showmode    " 在底部显示当前处于的模式
+set showcmd     " 在底部显示当前的指令操作
+
+set mouse=a     " 支持使用鼠标
+
 """"""""""""""""""""""""""""""""""""""""""""
 " 设置UTF8
 set encoding=utf-8
@@ -7,19 +12,20 @@ set fileencodings=utf-8,gbk,cp936
 set fileencoding=utf-8
 """"""""""""""""""""""""""""""""""""""""""""
 
-syntax on   " 打开语法高亮
+syntax on   " 打开语法高亮。自动识别代码，使用多种颜色显示
 filetype on " 文件类型检测
 filetype plugin on  " 文件类型插件自动检测加载
 filetype indent on  " 文件类型缩进自动检测
+
 set number  " 显示行号
 set relativenumber  " 显示相对行号
 
 """"""""""""""""""""""""""""""""""""""""""""
 " 配置tab行为
 set expandtab   " 将tab扩展为空格键
-set tabstop=4   " tab为4个空格
-set softtabstop=4   " 编辑模式时，缩进的长度
-set shiftwidth=4    " 设置自动缩进时使用的缩进长度
+set tabstop=2   " tab为2个空格
+set softtabstop=2   " 编辑模式时，缩进的长度
+set shiftwidth=2    " 在文本上按`>>`、`<<`或者`==`时，每一级的字符数
 set autoindent  " 自动缩进
 set smartindent " 智能缩进
 set cindent " 使用C类型的缩进
@@ -61,4 +67,11 @@ set ignorecase  " 忽略大小写
 " vim 备份文件行为
 set noundofile      " 不创建 .un~ 撤销文件
 set nobackup        " 不创建备份文件
+set noswapfile      " 不创建交换文件
 """"""""""""""""""""""""""""""""""""""""""""
+
+set noerrorbells    " 出错时，不发出响声    
+set history=1000    " 记住1000次历史操作   
+set autoread        " 打开文件监视，如果在编辑过程中文件发生外部改变，就会提示
+set listchars=tab:»■,trail:■    " 如果行尾有多余的空格（包括tab），则显示为方块
+set list
