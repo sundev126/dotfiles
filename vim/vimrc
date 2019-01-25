@@ -67,9 +67,19 @@ set ignorecase  " 忽略大小写
 
 """"""""""""""""""""""""""""""""""""""""""""
 " vim 备份文件行为
-set noundofile      " 不创建 .un~ 撤销文件
+" 修改undodir为~/.vim/undodir
+if has('persistent_undo')
+    silent call system('mkdir -p ~/.vim/undodir > /dev/null 2>&1')
+    set undodir=~/.vim/undodir
+    set undofile
+endif
+" 修改swapfile的目录为~/.vim/swapdir
+silent call system('mkdir -p ~/.vim/swapdir > /dev/null 2>&1')
+set directory=~/.vim/swapdir
+set swapfile
+
 set nobackup        " 不创建备份文件
-set noswapfile      " 不创建交换文件
+
 """"""""""""""""""""""""""""""""""""""""""""
 
 set noerrorbells    " 出错时，不发出响声    
