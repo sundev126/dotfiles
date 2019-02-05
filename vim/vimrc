@@ -2,6 +2,33 @@ set nocompatible    "使用vim键位
 
 set t_Co=256    " 启用256色
 
+" 安装vim-plug作为插件管理器
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+call plug#begin()
+Plug 'tpope/vim-surround'
+Plug 'Raimondi/delimitMate'
+Plug 'mattn/emmet-vim'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'easymotion/vim-easymotion'
+call plug#end()
+
+""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""NERDCommenter""""""""""""""""""""
+let g:NERDSpaceDelims = 1   " 在注释符之后增加一个空格
+
+""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""NERDTree"""""""""""""""""""""""""
+let g:NERDTreeNodeDelimiter = "\u00a0" " 使用no break space作为分隔符,解决mac下^G问题
+autocmd VimEnter * NERDTree            " 进入vim后自动显示NERDTree
+autocmd VimEnter * wincmd p            " 显示NERDTree后，将焦点定位到前一个可显示的panel
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif   " 如果:q后只剩一个NERDTree则直接退出vim
+
+
 set showmode    " 在底部显示当前处于的模式
 set showcmd     " 在底部显示当前的指令操作
 
@@ -83,5 +110,4 @@ set nobackup        " 不创建备份文件
 """"""""""""""""""""""""""""""""""""""""""""
 
 set noerrorbells    " 出错时，不发出响声    
-set history=1000    " 记住1000次历史操作   
-set autoread        " 打开文件监视，如果在编辑过程中文件发生外部改变，就会提示
+set history=1000    " 记住1000次历史操作
