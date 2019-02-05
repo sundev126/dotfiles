@@ -23,9 +23,8 @@ let g:NERDSpaceDelims = 1   " 在注释符之后增加一个空格
 
 """"""""""""""""""""""""""""""""""""""""""""
 """""""""""NERDTree"""""""""""""""""""""""""
+map <silent> <F3> :NERDTreeToggle <cr>
 let g:NERDTreeNodeDelimiter = "\u00a0" " 使用no break space作为分隔符,解决mac下^G问题
-autocmd VimEnter * NERDTree            " 进入vim后自动显示NERDTree
-autocmd VimEnter * wincmd p            " 显示NERDTree后，将焦点定位到前一个可显示的panel
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif   " 如果:q后只剩一个NERDTree则直接退出vim
 
 
@@ -68,19 +67,22 @@ set nofoldenable    " 启动 vim 时关闭折叠代码
 " 外观界面
 " 深色背景
 " set background=dark
+
+""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""statusline"""""""""""""""""""""""
 set laststatus=2    " 显示状态栏
 " 设置状态栏显示的数据
 function! FileSize()
-    let bytes = getfsize(expand("%:p"))
+    let bytes = getfsize(expand('%:p'))
     if bytes <= 0
         return ""
     endif
     if bytes < 1024
         return bytes
     elseif bytes < 1024*1024
-        return (bytes/1024) . "K"
+        return (bytes/1024) . 'K'
     else
-        return (bytes/1024/1024) . "M"
+        return (bytes/1024/1024) . 'M'
     endif
 endfunction
 set statusline=%t\ %m%r\    "文件名 文件状态
@@ -88,6 +90,37 @@ set statusline+=[%{strlen(&fenc)?&fenc:'none'}] "文件编码
 set statusline+=\ %{FileSize()}
 set statusline+=%=[HEX:%B]
 set statusline+=\ %-21(%11(%l/%L%),%-3v\ %P%)
+
+""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""tabline""""""""""""""""""""""""""
+function! MyTabline()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    let tab = i + 1
+    let winnr = tabpagewinnr(tab)
+    let buflist = tabpagebuflist(tab)
+    let bufnr = buflist[winnr - 1]
+    let bufname = bufname(bufnr)
+    let bufmodified = getbufvar(bufnr, "&mod")
+
+    let s .= '%' . tab . 'T'
+    let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+    let s .= ' ' . tab .':'
+    let s .= (bufname != '' ? '['. fnamemodify(bufname, ':t') . '] ' : '[No Name] ')
+
+    if bufmodified
+      let s .= '[+] '
+    endif
+  endfor
+
+  let s .= '%#TabLineFill#'
+  if (exists("g:tablineclosebutton"))
+    let s .= '%=%999XX'
+  endif
+  return s
+endfunction
+set tabline=%!MyTabline()
+set showtabline=2
 
 set hlsearch    " 高亮显示搜索结果
 set incsearch   " 实时跳转到搜索到的位置
