@@ -17,16 +17,16 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'easymotion/vim-easymotion'
 call plug#end()
 
-""""""""""""""""""""""""""""""""""""""""""""
 """""""""""NERDCommenter""""""""""""""""""""
 let g:NERDSpaceDelims = 1   " 在注释符之后增加一个空格
 
-""""""""""""""""""""""""""""""""""""""""""""
 """""""""""NERDTree"""""""""""""""""""""""""
 map <silent> <F3> :NERDTreeToggle <cr>
 let g:NERDTreeNodeDelimiter = "\u00a0" " 使用no break space作为分隔符,解决mac下^G问题
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif   " 如果:q后只剩一个NERDTree则直接退出vim
 
+"""""""""""vue文件使用html配色""""""""""""""
+autocmd BufRead,BufNewFile *.vue set filetype=html
 
 set showmode    " 在底部显示当前处于的模式
 set showcmd     " 在底部显示当前的指令操作
@@ -34,12 +34,10 @@ set modifiable  " 允许更改缓冲区
 
 set mouse=a     " 支持使用鼠标
 
-""""""""""""""""""""""""""""""""""""""""""""
-" 设置UTF8
+"""""""""""设置UTF-8编码""""""""""""""
 set encoding=utf-8
 set fileencodings=utf-8,gbk,cp936
 set fileencoding=utf-8
-""""""""""""""""""""""""""""""""""""""""""""
 
 syntax on   " 打开语法高亮。自动识别代码，使用多种颜色显示
 filetype on " 文件类型检测
@@ -49,8 +47,7 @@ filetype indent on  " 文件类型缩进自动检测
 set number  " 显示行号
 set relativenumber  " 显示相对行号
 
-""""""""""""""""""""""""""""""""""""""""""""
-" 配置tab行为
+"""""""""""配置tab行为""""""""""""""
 set expandtab   " 将tab扩展为空格键
 set tabstop=4   " tab为2个空格
 set softtabstop=4   " 编辑模式时，缩进的长度
@@ -58,8 +55,8 @@ set shiftwidth=4    " 在文本上按`>>`、`<<`或者`==`时，每一级的字�
 set autoindent  " 自动缩进
 set smartindent " 智能缩进
 set cindent " 使用C类型的缩进
-""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""配置代码折叠""""""""""""""
 set foldmethod=syntax   " 基于缩进或语法进行代码折叠
 set nofoldenable    " 启动 vim 时关闭折叠代码
 
@@ -68,7 +65,6 @@ set nofoldenable    " 启动 vim 时关闭折叠代码
 " 深色背景
 " set background=dark
 
-""""""""""""""""""""""""""""""""""""""""""""
 """""""""""statusline"""""""""""""""""""""""
 set laststatus=2    " 显示状态栏
 " 设置状态栏显示的数据
@@ -91,7 +87,6 @@ set statusline+=\ %{FileSize()}
 set statusline+=%=[HEX:%B]
 set statusline+=\ %-21(%11(%l/%L%),%-3v\ %P%)
 
-""""""""""""""""""""""""""""""""""""""""""""
 """""""""""tabline""""""""""""""""""""""""""
 function! MyTabline()
   let s = ''
@@ -122,19 +117,18 @@ endfunction
 set tabline=%!MyTabline()
 set showtabline=2
 
+"""""""""""搜索相关配置""""""""""""""""""""""
 set hlsearch    " 高亮显示搜索结果
 set incsearch   " 实时跳转到搜索到的位置
 set ignorecase  " 忽略大小写
 
-""""""""""""""""""""""""""""""""""""""""""""
-" vim 备份文件行为
-" 修改undodir为~/.vim/undodir
+"""""""""""修改undodir为~/.vim/undodir"""""""
 if has('persistent_undo')
     silent call system('mkdir -p ~/.vim/undodir > /dev/null 2>&1')
     set undodir=~/.vim/undodir
     set undofile
 endif
-" 修改swapfile的目录为~/.vim/swapdir
+"""""""""""修改swapfile的目录为~/.vim/swapdir"""""""""
 silent call system('mkdir -p ~/.vim/swapdir > /dev/null 2>&1')
 set directory=~/.vim/swapdir
 set swapfile
