@@ -49,7 +49,7 @@ set relativenumber  " 显示相对行号
 
 """""""""""配置tab行为""""""""""""""
 set expandtab   " 将tab扩展为空格键
-set tabstop=4   " tab为2个空格
+set tabstop=4   " tab为4个空格
 set softtabstop=4   " 编辑模式时，缩进的长度
 set shiftwidth=4    " 在文本上按`>>`、`<<`或者`==`时，每一级的字符数
 set autoindent  " 自动缩进
